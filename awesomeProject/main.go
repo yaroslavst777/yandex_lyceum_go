@@ -16,10 +16,25 @@ func GetUTFLength(input []byte) (int, error) {
 	return utf8.RuneCount(input), nil
 }
 
-func main() {
-	str1 := "abc"
-	str2 := "абв"
+func myPrint(n int) {
+	fmt.Println("Это выполняется в потоке ", n)
+}
 
-	fmt.Println(len(str1))
-	fmt.Println(len(str2))
+func main() {
+
+	go myPrint(1)
+
+	fmt.Println("Это выполняется в основном потоке ")
+
+	a := 0
+	for i := 0; i < 10000000; i++ {
+		a++
+	}
+
+	go myPrint(2)
+
+	b := 0
+	for i := 0; i < 10000000; i++ {
+		b++
+	}
 }
